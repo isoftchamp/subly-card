@@ -54,12 +54,13 @@ export const Card: React.FC<Props> = ({ medium }) => {
           <div className="absolute top-0 left-0 w-full h-full bg-gray-200 bg-opacity-50 flex items-center justify-center">
             <div className="w-5/6">
               <p className="text-center font-medium">Transcibing subtitle</p>
-              <div
-                className="mt-5 w-full h-3 bg-purple-700 rounded-full  bg-stripes animate-move-stripes"
-                style={{
-                  width: '75%',
-                }}
-              ></div>
+              <div className="flex justify-between items-center mt-5">
+                <div
+                  className="w-full h-3 bg-purple-700 rounded-full bg-stripes animate-move-stripes"
+                  style={{ width: `75%` }}
+                ></div>
+                <span className="ml-2 text-purple-700 font-medium">75%</span>
+              </div>
             </div>
           </div>
         </div>

@@ -50,7 +50,7 @@ const mediums: Medium[] = [
 
 const App: React.FC = () => {
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
+    <div className="flex justify-center h-screen bg-gray-100">
       <CardList mediums={mediums} />
     </div>
   );
