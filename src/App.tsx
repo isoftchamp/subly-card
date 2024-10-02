@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { CardList } from './components';
+import { CardList, LanguageFilter, StatusFilter } from './components';
+import { Language, MediumStatus } from './enums';
 import { Medium } from './interfaces';
 
 import './App.css';
@@ -49,9 +50,43 @@ const mediums: Medium[] = [
 ];
 
 const App: React.FC = () => {
+  // Manage selected statuses and languages as arrays for multi-select
+  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
+  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
+
+  // Get unique statuses and languages from mediums
+  const statuses = Object.values(MediumStatus);
+  const languages = Object.values(Language);
+
+  // Filter mediums based on selected filters
+  const filteredMediums = mediums.filter((medium) => {
+    const matchesStatus = selectedStatuses.length === 0 || selectedStatuses.includes(medium.status);
+    const matchesLanguage =
+      selectedLanguages.length === 0 ||
+      medium.languages.some((lang) => selectedLanguages.includes(lang));
+    return matchesStatus && matchesLanguage;
+  });
+
   return (
     <div className="flex justify-center h-screen bg-gray-100">
-      <CardList mediums={mediums} />
+      <div className="max-w-screen-xl p-10">
+        {/* Filter Components */}
+        <div className="flex space-x-6 mb-6">
+          <StatusFilter
+            selectedStatuses={selectedStatuses}
+            onStatusChange={setSelectedStatuses}
+            availableStatuses={statuses}
+          />
+          <LanguageFilter
+            selectedLanguages={selectedLanguages}
+            onLanguageChange={setSelectedLanguages}
+            languages={languages}
+          />
+        </div>
+
+        {/* CardList component */}
+        <CardList mediums={filteredMediums} />
+      </div>
     </div>
   );
 };

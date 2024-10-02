@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { capitalizeFirstLetter } from '@/utils';
-
 interface Props {
   selectedStatuses: string[];
   onStatusChange: (status: string[]) => void;
@@ -33,7 +31,7 @@ export const StatusFilter: React.FC<Props> = ({
               onChange={() => handleCheckboxChange(status)}
               className="form-checkbox h-4 w-4"
             />
-            <span className="text-sm">{capitalizeFirstLetter(status)}</span>
+            <span className="text-sm capitalize-first-letter">{status}</span>
           </label>
         ))}
       </div>
