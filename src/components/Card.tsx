@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { MediumStatus } from '@/enums';
 import { Medium } from '@/interfaces';
 
@@ -8,17 +6,8 @@ interface Props {
 }
 
 export const Card: React.FC<Props> = ({ medium }) => {
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseEnter = () => setIsHovered(true);
-  const handleMouseLeave = () => setIsHovered(false);
-
   return (
-    <div
-      className="bg-white shadow-md rounded-lg overflow-hidden w-full relative"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <div className="bg-white shadow-md rounded-lg overflow-hidden w-full relative group">
       {medium.status === MediumStatus.Error ? (
         <div className="h-48 bg-red-100 p-4 space-y-4">
           {/* Exclamation Mark Icon and Error Message */}
@@ -67,16 +56,14 @@ export const Card: React.FC<Props> = ({ medium }) => {
       ) : (
         <div className="relative">
           <img src={medium.image} alt="Cover" className="w-full h-48 object-cover" />
-          {isHovered && (
-            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-30">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded font-medium">
-                Edit
-              </button>
-              <span className="text-white ml-4">
-                <span className="font-medium">{medium.languages.length}</span> languages
-              </span>
-            </div>
-          )}
+          <div className="absolute top-0 left-0 w-full h-full items-center justify-center bg-black bg-opacity-30 hidden group-hover:flex">
+            <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded font-medium">
+              Edit
+            </button>
+            <span className="text-white ml-4">
+              <span className="font-medium">{medium.languages.length}</span> languages
+            </span>
+          </div>
         </div>
       )}
 

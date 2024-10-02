@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import { MediumStatus } from '@/enums';
 import { Medium } from '@/interfaces';
@@ -34,18 +34,6 @@ describe('Card Component', () => {
   it('shows transcribing state when status is transcribing', () => {
     render(<Card medium={{ ...mockMedium, status: MediumStatus.Transcribing }} />);
     expect(screen.getByText('Transcibing subtitle')).toBeInTheDocument();
-  });
-
-  it('displays edit button and language count on hover', () => {
-    render(<Card medium={mockMedium} />);
-
-    const card = screen.getByText('Test Medium').closest('div');
-    fireEvent.mouseEnter(card!); // Trigger mouse enter
-    expect(screen.getByText('Edit')).toBeInTheDocument();
-    expect(screen.getByText(/1*languages/i)).toBeInTheDocument();
-
-    fireEvent.mouseLeave(card!); // Trigger mouse leave
-    expect(screen.queryByText('Edit')).not.toBeInTheDocument();
   });
 
   it('applies the correct status color for the badge', () => {
