@@ -8,7 +8,7 @@ interface Props {
 
 export const CardList: React.FC<Props> = ({ mediums }) => {
   return (
-    <div className="p-10">
+    <div className="max-w-screen-xl p-10">
       {/* Grid Container */}
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {mediums.map((medium) => (
