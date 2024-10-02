@@ -2,8 +2,6 @@ import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 
-import { capitalizeFirstLetter } from '@/utils';
-
 import { StatusFilter } from './StatusFilter';
 
 describe('StatusFilter Component', () => {
@@ -20,7 +18,7 @@ describe('StatusFilter Component', () => {
 
     // Check if each status checkbox is rendered
     availableStatuses.forEach((status) => {
-      expect(screen.getByLabelText(capitalizeFirstLetter(status))).toBeInTheDocument();
+      expect(screen.getByLabelText(status)).toBeInTheDocument();
     });
   });
 
@@ -36,7 +34,7 @@ describe('StatusFilter Component', () => {
     );
 
     // Select the first checkbox
-    fireEvent.click(screen.getByLabelText(capitalizeFirstLetter(availableStatuses[0])));
+    fireEvent.click(screen.getByLabelText(availableStatuses[0]));
     expect(mockOnStatusChange).toHaveBeenCalledWith([availableStatuses[0]]);
   });
 
@@ -50,11 +48,11 @@ describe('StatusFilter Component', () => {
     );
 
     // Check if the 'ready' checkbox is checked
-    expect(screen.getByLabelText('Ready')).toBeChecked();
+    expect(screen.getByLabelText('ready')).toBeChecked();
 
     // Other statuses should not be checked
-    expect(screen.getByLabelText('Transcribing')).not.toBeChecked();
-    expect(screen.getByLabelText('Error')).not.toBeChecked();
+    expect(screen.getByLabelText('transcribing')).not.toBeChecked();
+    expect(screen.getByLabelText('error')).not.toBeChecked();
   });
 
   it('toggles status selection correctly', () => {
@@ -68,7 +66,7 @@ describe('StatusFilter Component', () => {
     );
 
     // Uncheck the 'ready' checkbox
-    fireEvent.click(screen.getByLabelText('Ready'));
+    fireEvent.click(screen.getByLabelText('ready'));
     expect(mockOnStatusChange).toHaveBeenCalledWith([]);
   });
 });

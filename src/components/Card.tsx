@@ -1,28 +1,20 @@
-import { useState } from 'react';
+import React from 'react';
 
 import { MediumStatus } from '@/enums';
 import { Medium } from '@/interfaces';
+import { formatTimeAgo } from '@/utils';
 
 interface Props {
   medium: Medium;
 }
 
-export const Card: React.FC<Props> = ({ medium }) => {
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseEnter = () => setIsHovered(true);
-  const handleMouseLeave = () => setIsHovered(false);
-
+export const Card: React.FC<Props> = React.memo(({ medium }) => {
   return (
-    <div
-      className="bg-white shadow-md rounded-lg overflow-hidden w-full relative"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <div className="bg-white shadow-md rounded-lg overflow-hidden w-full relative group">
       {medium.status === MediumStatus.Error ? (
         <div className="h-48 bg-red-100 p-4 space-y-4">
           {/* Exclamation Mark Icon and Error Message */}
-          <div className="mt-4 flex items-center justify-start space-x-4">
+          <div className="mt-4 flex items-center justify-start space-x-4 h-20">
             {/* Exclamation Mark Icon */}
             <div className="flex justify-center items-center border-2 border-red-500 text-red-500 rounded-full aspect-square w-10 h-10">
               <span className="text-xl font-bold">!</span>
@@ -36,21 +28,21 @@ export const Card: React.FC<Props> = ({ medium }) => {
           </div>
 
           {/* Buttons */}
-          <div className="flex space-x-4 justify-center">
+          <div className="flex space-x-4 justify-end">
             {/* Delete Button */}
-            <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded font-medium">
+            <button className="border border-gray-500 bg-white hover:border-transparent hover:bg-red-700 text-gray-800 hover:text-white px-3 py-1 rounded transition-colors">
               Delete File
             </button>
 
             {/* Report Issue Button */}
-            <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-1 rounded font-medium">
+            <button className="bg-purple-600 hover:bg-purple-800 text-white px-3 py-1 rounded transition-colors">
               Report Issue
             </button>
           </div>
         </div>
       ) : medium.status === MediumStatus.Transcribing ? (
         <div className="relative">
-          <img src={medium.image} alt="Cover" className="w-full h-48 object-cover" />
+          <img src={medium.cover} alt="Cover" className="w-full h-48 object-cover" />
           <div className="absolute top-0 left-0 w-full h-full bg-gray-200 bg-opacity-50 flex items-center justify-center">
             <div className="w-5/6">
               <p className="text-center font-medium">Transcibing subtitle</p>
@@ -66,35 +58,44 @@ export const Card: React.FC<Props> = ({ medium }) => {
         </div>
       ) : (
         <div className="relative">
-          <img src={medium.image} alt="Cover" className="w-full h-48 object-cover" />
-          {isHovered && (
-            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-30">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded font-medium">
-                Edit
-              </button>
-              <span className="text-white ml-4">
-                <span className="font-medium">{medium.languages.length}</span> languages
-              </span>
-            </div>
-          )}
+          <img src={medium.cover} alt="Cover" className="w-full h-48 object-cover" />
+          <div className="absolute top-0 left-0 w-full h-full items-center justify-center bg-black bg-opacity-30 hidden group-hover:flex">
+            <button className="border border-white bg-transparent hover:border-transparent hover:bg-blue-600 text-white px-4 py-1 rounded transition-colors">
+              Edit
+            </button>
+            <span className="text-white ml-4">
+              <span className="font-medium">{medium.languages.length}</span> languages
+            </span>
+          </div>
         </div>
       )}
 
+      <div className="px-4 py-3">
+        {/* Name displayed on the first line */}
+        <h2 className="text-lg font-semibold truncate capitalize-first-letter">{medium.name}</h2>
+
+        {/* Status Badge */}
+        <span className="text-sm rounded text-gray-500">
+          {medium.status === MediumStatus.Ready
+            ? `Edited ${formatTimeAgo(medium.updatedAt ?? medium.createdAt)}`
+            : medium.status === MediumStatus.Transcribing
+              ? 'Transcribing'
+              : 'Error in processing'}
+        </span>
+      </div>
+    </div>
+  );
+});
+
+export const SkeletonCard: React.FC = () => {
+  return (
+    <div className="bg-gray-200 animate-pulse shadow-md rounded-lg overflow-hidden w-full">
+      <div className="h-48 bg-gray-300"></div>
       <div className="p-4">
-        <div className="justify-between items-center">
-          {/* Title */}
-          <h2 className="text-lg font-semibold truncate w-full">{medium.title}</h2>
-          <span
-            className={`px-2 py-1 text-sm rounded uppercase font-medium ${
-              medium.status === MediumStatus.Ready
-                ? 'bg-green-100 text-green-700'
-                : medium.status === MediumStatus.Transcribing
-                  ? 'bg-yellow-100 text-yellow-700'
-                  : 'bg-red-100 text-red-700'
-            }`}
-          >
-            {medium.status}
-          </span>
+        <div className="h-6 bg-gray-300 rounded mb-2"></div>
+        <div className="flex justify-between items-center">
+          <div className="h-4 bg-gray-300 rounded w-1/4"></div>
+          <div className="h-4 bg-gray-300 rounded w-1/4"></div>
         </div>
       </div>
     </div>

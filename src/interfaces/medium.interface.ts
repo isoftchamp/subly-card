@@ -1,14 +1,15 @@
-import { MediumStatus } from '@/enums';
+import { Language, MediumStatus } from '@/enums';
 
 export type MediumStatusType = `${MediumStatus}`;
+export type LanguageType = `${Language}`;
 
-// TODO: fake data structure: need to change according real data structure.
 export interface Medium {
   id: string;
+  name: string;
+  cover: string;
+  languages: LanguageType[];
   status: MediumStatusType;
-  image: string;
-  title: string;
-  languages: string[];
-  updated: string;
+  createdAt: string;
+  updatedAt?: string;
   errorMessage?: string;
 }
