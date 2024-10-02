@@ -39,3 +39,7 @@
 .animate-move-stripes {
   animation: move-stripes 1s linear infinite;
 }
+
+.capitalize-first-letter::first-letter {
+  text-transform: uppercase;
+}

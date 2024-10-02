@@ -1,50 +1,91 @@
-# React + TypeScript + Vite
+# React + TypeScript Card Renderer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a React application built with TypeScript that renders cards using data from an external source. Users can filter the displayed cards based on status and language.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Render cards from the [Mediums data](https://raw.githubusercontent.com/getsubly/test-data/refs/heads/master/cards.json).
+- Filter cards by:
+  - Status
+  - Language
 
-## Expanding the ESLint configuration
+## Technologies Used
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- React
+- TypeScript
+- Vite (for development)
+- Vitest (for testing)
 
-- Configure the top-level `parserOptions` property like this:
+## Getting Started
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### Prerequisites
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- Node.js (v18 or later)
+- npm (Node package manager)
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### Installation
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+#### 1. Clone the repository:
+
+  ```bash
+  git clone https://github.com/isoftchamp/subly-card
+  cd subly-card
+  ```
+
+#### 2. Install dependencies
+
+  ```
+  npm install
+  ```
+
+### Running the Application
+
+To start the development server, run:
+
+  ```
+  npm run dev
+  ```
+
+Open your browser and navigate to http://localhost:5173 (or the port specified in your Vite configuration).
+
+### Building the Application
+
+To build the application for production, run:
+
+  ```
+  npm run build
+  ```
+
+### Running Tests
+
+To run the tests using Vitest, execute:
+
+  ```
+  npm run test
+  ```
+
+To run tests in watch mode, execute:
+
+  ```
+  npm run test:watch
+  ```
+
+### Other Scripts
+
+* Linting: Run `npm run lint` to lint the code.
+* Preview: Run `npm run preview` to preview the production build.
+* Formatting: Run `npm run format` to format the code with Prettier.
+
+## Deployment
+
+The application is deployed and can be accessed at: https://subly-card.vercel.app/
+
+## Filtering Cards
+
+Users can filter the cards using the provided filters for status and language. The application updates the displayed cards dynamically based on the selected filters.
+
+## Contributing
+Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
+
+## License
+This project is licensed under the MIT License.
