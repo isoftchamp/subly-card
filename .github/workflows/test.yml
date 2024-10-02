@@ -1,0 +1,40 @@
+name: Run Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+env:
+  MEDIUM_DAT_URL: https://run.mocky.io/v3/3c20b2a9-4a8b-46b6-83cb-01b83e680738
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container: node:20.17.0
+    defaults:
+      run:
+        working-directory: ./
+
+    strategy:
+      matrix:
+        node-version: [20]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run build
+        run: npm run build
