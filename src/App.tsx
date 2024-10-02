@@ -32,7 +32,7 @@ const App: React.FC = () => {
 
   return (
     <div className="flex justify-center bg-gray-100">
-      <div className="max-w-screen-xl p-10">
+      <div className="max-w-screen-xl p-10 sm:min-w-[600px] md:min-w-[700px] lg:min-w-[900px] xl:min-w-[1000px]">
         {/* Filter Components */}
         <div className="flex space-x-6 mb-6">
           <StatusFilter
